@@ -13,6 +13,4 @@ class DataManager(val local: IDataSource, val remote: IDataSource) {
         if (refresh) return remote.getUsers(str).onErrorResumeNext(local.getUsers(str))
         else return local.getUsers(str).onErrorResumeNext(getUsers(str, true))
     }
-
-
 }

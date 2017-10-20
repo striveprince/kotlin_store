@@ -2,8 +2,9 @@ package com.tim.redux.base.container
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.tim.redux.App
-import com.tim.redux.base.flux.Dispatcher
+import com.kotlin.store.Dispatcher
+import com.kotlin.store.Params
+import com.tim.redux.ui.App
 import com.tim.redux.data.entity.InfoEntity
 import io.reactivex.BackpressureStrategy
 import io.reactivex.Flowable
@@ -17,26 +18,19 @@ import org.jetbrains.anko.AnkoLogger
  */
 
 
-abstract class BaseActivity : AppCompatActivity(), AnkoLogger, Consumer<Event> {
+abstract class BaseActivity : AppCompatActivity(), AnkoLogger, Consumer<Params> {
     val dispatcher = Dispatcher.instance
     val compositeDisposable = CompositeDisposable()//rxBus
 
-    val set = HashSet<Event>()
+    val set = HashSet<Params>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //register the observer
         compositeDisposable.add(App.subject.subscribe(this))
     }
 
-    private fun initData() {
-        val group = javaClass.name
-                .substring(packageName.length)
-                .split(".")
-                .first()
-    }
 
-    override fun accept(event: Event) {
-        if (set.add(event)) {
+    override fun accept(event: Params) {
             val f: Flowable<*> = dispatcher.dispatch(event)
             val flow =  f.flatMap { entity ->
                 when (entity) {
@@ -48,11 +42,10 @@ abstract class BaseActivity : AppCompatActivity(), AnkoLogger, Consumer<Event> {
                     else -> Flowable.just(entity)
                 }
             }
-            respond(flow)
-        }
+            respond(event,flow)
     }
 
-    abstract fun respond(flowable:Flowable<*>)
+    abstract fun respond(event: Params, flowable:Flowable<*>)
 
     override fun onDestroy() {
         super.onDestroy()

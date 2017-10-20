@@ -1,16 +1,13 @@
-package com.tim.redux.base.flux
+package com.kotlin.store
 
-import com.tim.redux.base.container.Event
-import io.reactivex.Flowable
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.functions
-import kotlin.reflect.full.valueParameters
 
 /**
  * Created by pc on 2017/10/13.
  */
 interface Store {
-    fun<T> call(event: Event) :T{
+    fun<T> call(event: Params) :T{
         val list = arrayListOf<Any>(this,event.state)
         list.addAll(event.params)
         return this::class.functions

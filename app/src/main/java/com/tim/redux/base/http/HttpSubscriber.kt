@@ -2,14 +2,14 @@ package com.tim.redux.base.http
 
 import android.content.Context
 import android.widget.Toast
-import com.tim.redux.App
+import com.tim.redux.ui.App
 import org.reactivestreams.Subscriber
 import org.reactivestreams.Subscription
 
 /**
  * Created by pc on 2017/10/19.
  */
-class HttpSubscriber<T>(val context: Context = App.app.getCurrentActivity(), val accept:(t:T)->Unit): Subscriber<T>{
+class HttpSubscriber<T>(private val context: Context = App.getCurrentActivity(), private val accept:(t:T)->Unit): Subscriber<T>{
     override fun onNext(t: T) {
         accept(t)
     }

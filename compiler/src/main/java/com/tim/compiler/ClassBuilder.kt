@@ -10,7 +10,7 @@ import com.tim.annotation.Event
  */
 
 // notification the the
-class ClassBuilder(val typeElement:TypeElement) {
+class ClassBuilder(val typeElement:TypeElement,val methodElement: List<EventElement>) {
     companion object {
         const val caller = "target"
         const val request = "requestCode"
@@ -34,8 +34,8 @@ class ClassBuilder(val typeElement:TypeElement) {
     val event = typeElement.getChildWithAnnotation(Event::class.java)
 
     fun brewKotlin(){
-        val classname = "${className}Event"
-        val typeSpec = TypeSpec.objectBuilder(classname)
+//        val classname = "${className}Event"
+//        val typeSpec = TypeSpec.objectBuilder(classname)
     }
 
     fun addProperties(){

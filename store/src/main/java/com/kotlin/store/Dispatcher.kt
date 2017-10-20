@@ -1,15 +1,12 @@
-package com.tim.redux.base.flux
+package com.kotlin.store
 
-import com.tim.redux.base.container.Event
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.functions
 
 /**
  * Created by pc on 2017/10/13.
  */
-class Dispatcher private constructor() : AnkoLogger {
+class Dispatcher private constructor() {
     private object Builder {
         val dispatcher = Dispatcher()
     }
@@ -19,15 +16,25 @@ class Dispatcher private constructor() : AnkoLogger {
         val instance: Dispatcher by lazy { Builder.dispatcher }
     }
 
-    fun register(group:String,store:Store){
-        map.put(group,store)
+    fun register(vararg store : Store){
+        store.forEach { map.put(it::class.simpleName!!,it) }
     }
 
-    fun<T> dispatch(event: Event):T{
+    fun<T> dispatch(event: Params):T{
         return map[event.group]?.call(event)!!
     }
 
-    fun test(event: Event):String {
+    private fun check(function: KFunction<*>, event: Params, store:Any) :Boolean{
+        if (function.name == event.name){
+            val list = arrayListOf<Any>(store)
+            list.addAll(event.params)
+            function.call(args = list.toArray())
+            return true
+        }
+        return false
+    }
+
+    fun test(event: Params):String {
         val store = map[event.group]
         if(store == null)return ""
         store::class.functions
@@ -51,7 +58,6 @@ class Dispatcher private constructor() : AnkoLogger {
                     builder.append(":")
                     builder.append(function.returnType)
                     builder.append("{ body}")
-                    info { builder.toString() }
                     if(event.function.equals(function.name)) {
                         val list = arrayListOf<Any>(store,event.state)
                         list.addAll(event.params)
@@ -62,22 +68,5 @@ class Dispatcher private constructor() : AnkoLogger {
                 }
         return "no such funcation"
     }
-
-
-
-    private fun check(function: KFunction<*>, event: Event,store:Any) :Boolean{
-        if (function.name == event.name){
-            val list = arrayListOf<Any>(store)
-            list.addAll(event.params)
-            function.call(args = list.toArray())
-            return true
-        }
-        return false
-    }
-
-//    fun check(function:,event:Event):Boolean{
-//        if(function)
-//        return false
-//    }
 
 }
