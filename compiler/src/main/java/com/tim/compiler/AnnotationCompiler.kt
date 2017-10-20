@@ -1,6 +1,7 @@
 package com.tim.compiler
 
 import com.google.auto.service.AutoService
+import com.squareup.kotlinpoet.FunSpec
 import com.squareup.kotlinpoet.KotlinFile
 import com.squareup.kotlinpoet.TypeSpec
 import com.tim.annotation.Event
@@ -13,7 +14,7 @@ import javax.tools.StandardLocation
 
 @AutoService(Processor::class)
 //@SupportedSourceVersion(value = SourceVersion.getLatestSupported())
-class AnnotationCompiler:AbstractProcessor(){
+class AnnotationCompiler : AbstractProcessor() {
 
     override fun getSupportedSourceVersion(): SourceVersion {
         return SourceVersion.latestSupported()
@@ -31,8 +32,40 @@ class AnnotationCompiler:AbstractProcessor(){
 //                .groupBy { it.enclosingElement } // base on the key split the LinkedHashMap<Element, MutableList<Element>>()
 //                .map { ClassBuilder(it.key as TypeElement,it.value.map { EventElement(it as ExecutableElement) }) }
 //                .map { it.brewKotlin() }
+        val registerFunction = FunSpec.builder("register").run {
+//            addParameter("state", Int::class)
+            addComment(" register method")
+        }.build()
+        val typeSpec = TypeSpec.objectBuilder("HttpStore")
+        typeSpec.addFun(registerFunction)
+        filerUtils.createResource(StandardLocation.SOURCE_OUTPUT, "com.tim.redux.ui.store", "HttpStoreEvent.kt")
+                .openWriter()
+                .use {
+                    with(KotlinFile.builder("com.tim.redux.ui.store", "HttpStoreEvent")) {
+                        addType(typeSpec.build())
+                                .build()
+                    }
+                }
         return false
     }
+
+    /**
+     * JavaFile javaFile = JavaFile.builder("com.francis.helloworld", helloWorld)
+    .build();
+
+    try {
+    //这里的输出要在Gradle Console中看
+    javaFile.writeTo(System.out);
+    } catch (IOException e) {
+    e.printStackTrace();
+    }
+    return false;
+
+    作者：francis_yh
+    链接：http://www.jianshu.com/p/745655cb431a
+    來源：简书
+    著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+     * */
 
 //    fun brewKotlin() {
 //        val classname = "${className}Event"

@@ -62,7 +62,7 @@ class ClassBuilder(val typeElement: TypeElement, val methodElement: List<EventEl
     }
 
     private fun addEventFunction(typeSpec: TypeSpec.Builder,eventElement: EventElement) {
-        val builder  = FunSpec.builder(eventElement.functionName)
+        val builder  = FunSpec.builder("${eventElement.functionName}Event")
                 .addParameter("state",Int::class)
         typeSpec.addFun(builder.build())
     }
