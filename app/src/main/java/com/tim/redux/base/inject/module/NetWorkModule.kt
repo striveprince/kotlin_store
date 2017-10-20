@@ -41,16 +41,16 @@ class NetWorkModule {
 //        return retrofit.create(ApiService::class.java)
 //    }
 
-//    @Provides
-//    @AppScope
-//    fun provideApiService(okHttpClient: OkHttpClient): ApiService {
-//        return Retrofit.Builder()
-//                .baseUrl("")
-//                .callFactory(okHttpClient)
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
-//                .build()
-//                .create(ApiService::class.java)
-//    }
+    @Provides
+    @AppScope
+    fun provideApiService(okHttpClient: OkHttpClient): ApiService {
+        return Retrofit.Builder()
+                .baseUrl("")
+                .callFactory(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+                .build()
+                .create(ApiService::class.java)
+    }
 
 }

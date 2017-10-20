@@ -8,7 +8,7 @@ import com.tim.redux.base.dispatchData
 import com.tim.redux.base.http.HttpSubscriber
 import com.tim.redux.data.entity.InfoEntity
 import com.tim.redux.data.entity.user.UserEntity
-import com.tim.redux.ui.store.HttpStoreEvent
+//import com.tim.redux.ui.store.HttpStoreEvent
 import io.reactivex.Flowable
 import org.jetbrains.anko.*
 
@@ -23,17 +23,17 @@ class HomeActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         getContentView().setContentView(this)
-        accept(HttpStoreEvent.getHomeDataEvent(0, this))
-        accept(HttpStoreEvent.getUserEvent(0, this,userId))
+//        accept(HttpStoreEvent.getHomeDataEvent(0))
+//        accept(HttpStoreEvent.getUserEvent(0, userId))
     }
 
 
     override fun respond(event: Params, flowable: Flowable<*>) {
-        when (event.name) {
-            HttpStoreEvent.getHomeData ->
-                flowable.dispatchData<InfoEntity<HomeDataEntity>>().subscribe(s)
-            HttpStoreEvent.getUserEvent ->
-                flowable.dispatchData<InfoEntity<UserEntity>>().subscribe(u)
+        when (event.tag) {
+//            HttpStoreEvent.getHomeData ->
+//                flowable.dispatchData<InfoEntity<HomeDataEntity>>().subscribe(s)
+//            HttpStoreEvent.getUserEvent ->
+//                flowable.dispatchData<InfoEntity<UserEntity>>().subscribe(u)
         }
     }
 
