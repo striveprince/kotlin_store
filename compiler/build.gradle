@@ -1,11 +1,13 @@
 apply plugin: 'kotlin'
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.squareup:kotlinpoet:0.3.0'
     implementation project(':annotation')
+    implementation project(':store')
     testImplementation 'junit:junit:4.12'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre8:$kotlin_version"
+    implementation 'com.google.auto.service:auto-service:1.0-rc3'
 }
 
 

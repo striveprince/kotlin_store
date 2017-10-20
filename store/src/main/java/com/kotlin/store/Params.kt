@@ -7,6 +7,6 @@ class Params(
         val group:String,
         val function:String,
         val state: Int = 0,
-        val name:String,
+        val tag:String,
         vararg p:Any
 ){ val params = p }

@@ -8,7 +8,7 @@ import kotlin.reflect.full.functions
  */
 interface Store {
     fun<T> call(event: Params) :T{
-        val list = arrayListOf<Any>(this,event.state)
+        val list = arrayListOf(this,event.state)
         list.addAll(event.params)
         return this::class.functions
                 .filter { kFunction -> event.function == kFunction.name }
@@ -18,7 +18,11 @@ interface Store {
     }
 
     fun checkParams(kFunction: KFunction<*>, params: Array<out Any>): Boolean {
-        kFunction.parameters[0].kind
+        kFunction.parameters[0].name
         return params.size <= kFunction.parameters.size
+    }
+
+    fun che(kFunction: KFunction<*>, params: Array<out Any>){
+        kFunction.parameters[0].name
     }
 }

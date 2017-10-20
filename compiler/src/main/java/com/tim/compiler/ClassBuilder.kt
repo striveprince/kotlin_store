@@ -34,8 +34,8 @@ class ClassBuilder(val typeElement:TypeElement,val methodElement: List<EventElem
     val event = typeElement.getChildWithAnnotation(Event::class.java)
 
     fun brewKotlin(){
-//        val classname = "${className}Event"
-//        val typeSpec = TypeSpec.objectBuilder(classname)
+        val classname = "${className}Event"
+        val typeSpec = TypeSpec.objectBuilder(classname)
     }
 
     fun addProperties(){

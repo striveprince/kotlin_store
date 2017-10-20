@@ -26,7 +26,7 @@ class Dispatcher private constructor() {
 
     private fun check(function: KFunction<*>, event: Params, store:Any) :Boolean{
         if (function.name == event.name){
-            val list = arrayListOf<Any>(store)
+            val list = arrayListOf(store,event.state)
             list.addAll(event.params)
             function.call(args = list.toArray())
             return true

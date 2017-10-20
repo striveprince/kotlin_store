@@ -1,7 +1,5 @@
-package com.tim.redux.base.flux
+package com.kotlin.store
 
-import com.kotlin.store.Dispatcher
-import com.kotlin.store.Params
 import io.reactivex.Flowable
 import org.junit.Test
 
@@ -12,9 +10,9 @@ class DispatcherTest {
 
     @Test
     fun callFunction(){
-        val group = "test"
+        val group = "TestStore"
         Dispatcher.instance.register(TestStore())
-        val event = Params(group, "test", 0, "name", "params")
+        val event = Params(group, "test", 0, "tag", "params")
         val f :Flowable<String> = Dispatcher.instance.dispatch(event)
         f.subscribe { print(it) }
     }

@@ -1,5 +1,6 @@
 package com.tim.redux.ui.store
 
+import com.kotlin.store.Dispatcher
 import com.kotlin.store.Params
 
 /**
@@ -10,12 +11,23 @@ object HttpStoreEvent{
     val getHomeData = "getHomeData"
     val getUserEvent = "getUserEvent"
 
-    fun getHomeDataEvent(state:Int,any: Any): Params {
-        return Params(group, getHomeData, state, any::class.simpleName!!)
+    fun register(store:HttpStore){
+        Dispatcher.instance.register(store)
     }
 
-    fun getUserEvent(state: Int,any: Any,userId:Int): Params {
-        return Params(group, getUserEvent, state, any::class.simpleName!!, userId)
+    /**
+     *  val group:String,
+     *  val function:String,
+     *  val state: Int = 0,
+     *  val name:String,
+     *  vararg p:Any
+     * */
+    fun getHomeDataEvent(state:Int,tag: String = HttpStoreEvent::class.simpleName?:""): Params {
+        return Params(group, getHomeData, state,tag)
+    }
+
+    fun getUserEvent(state: Int,tag:String = HttpStoreEvent::class.simpleName?:"",userId:Int): Params {
+        return Params(group, getUserEvent, state, tag, userId)
     }
 
 }
