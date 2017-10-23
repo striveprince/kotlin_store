@@ -1,7 +1,6 @@
 package com.tim.redux.ui.store
 
 import com.kotlin.store.Store
-import com.tim.annotation.Event
 import com.tim.redux.data.api.ApiService
 import com.tim.redux.data.entity.InfoEntity
 import com.tim.redux.data.entity.user.UserEntity
@@ -33,12 +32,15 @@ class HttpStore private constructor(private val apiService: ApiService): Store {
         }
     }
 
-    @Event
+//    @Event
+    fun home(){
+
+    }
+
     fun getHomeData(state:Int): Flowable<InfoEntity<HomeDataEntity>> {
         return apiService.getHomeData("")
     }
 
-//    @Event
     fun getUser(state:Int,userId:Int): Flowable<InfoEntity<UserEntity>> {
         return apiService.getUsers("")
     }

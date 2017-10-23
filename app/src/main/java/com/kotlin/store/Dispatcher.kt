@@ -36,8 +36,7 @@ class Dispatcher private constructor() {
     }
 
     fun test(event: Params):String {
-        val store = map[event.group]
-        if(store == null)return ""
+        val store = map[event.group]!!
         store::class.functions
                 .forEach { function ->
                     val builder = StringBuilder("fun ")
@@ -59,8 +58,8 @@ class Dispatcher private constructor() {
                     builder.append(":")
                     builder.append(function.returnType)
                     builder.append("{ body}")
-                    if(event.function.equals(function.name)) {
-                        val list = arrayListOf<Any>(store,event.state)
+                    if(event.function ==function.name) {
+                        val list = arrayListOf(store,event.state)
                         list.addAll(event.params)
                         val arg = list.toArray()
                         function.call(*arg)

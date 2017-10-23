@@ -19,8 +19,8 @@ import org.jetbrains.anko.AnkoLogger
 
 
 abstract class BaseActivity : AppCompatActivity(), AnkoLogger, Consumer<Params> {
-    val dispatcher = Dispatcher.instance
-    val compositeDisposable = CompositeDisposable()//rxBus
+    private val dispatcher = Dispatcher.instance
+    private val compositeDisposable = CompositeDisposable()//rxBus
 
     val set = HashSet<Params>()
     override fun onCreate(savedInstanceState: Bundle?) {
