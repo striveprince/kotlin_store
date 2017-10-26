@@ -1,4 +1,4 @@
-package com.kotlin.store
+package com.tim.store
 
 import java.util.*
 import kotlin.reflect.KFunction
@@ -17,8 +17,8 @@ class Dispatcher private constructor() {
         val instance: Dispatcher by lazy { Builder.dispatcher }
     }
 
-    fun register(vararg store : Store){
-        store.forEach { map.put(it::class.simpleName!!,it) }
+    fun register(group:String,vararg store : Store){
+        store.forEach { map.put(group,it) }
     }
 
     fun<T> dispatch(event: Params):T{
@@ -66,7 +66,7 @@ class Dispatcher private constructor() {
                         return builder.toString()
                     }
                 }
-        return "no such funcation"
+        return "no such function"
     }
 
 }

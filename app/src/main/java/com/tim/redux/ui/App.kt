@@ -4,14 +4,14 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.support.multidex.MultiDexApplication
-import com.kotlin.store.Params
 import com.tim.redux.base.container.ActivityLifecycleCallbacks
 import com.tim.redux.base.inject.component.AppComponent
 import com.tim.redux.base.inject.component.DaggerAppComponent
 import com.tim.redux.base.inject.module.AppModule
 import com.tim.redux.data.api.ApiService
 import com.tim.redux.ui.store.HttpStore
-//import com.tim.redux.ui.store.HttpStoreEvent
+import com.tim.store.Params
+//import HttpStoreEvent
 import io.reactivex.subjects.PublishSubject
 import java.util.*
 import javax.inject.Inject

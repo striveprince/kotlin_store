@@ -2,16 +2,15 @@ package com.tim.redux.base.container
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import com.kotlin.store.Dispatcher
-import com.kotlin.store.Params
 import com.tim.redux.ui.App
-import com.tim.redux.data.entity.InfoEntity
-import io.reactivex.BackpressureStrategy
+import com.tim.store.Dispatcher
+import com.tim.store.Params
 import io.reactivex.Flowable
-import io.reactivex.FlowableEmitter
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Consumer
+import org.jetbrains.anko.AnkoComponent
 import org.jetbrains.anko.AnkoLogger
+import org.jetbrains.anko.setContentView
 
 /**
  * Created by pc on 2017/10/12.
@@ -22,27 +21,50 @@ abstract class BaseActivity : AppCompatActivity(), AnkoLogger, Consumer<Params> 
     private val dispatcher = Dispatcher.instance
     private val compositeDisposable = CompositeDisposable()//rxBus
 
-    val set = HashSet<Params>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //register the observer
+        contentView().setContentView(this)
         compositeDisposable.add(App.subject.subscribe(this))
     }
 
+    private fun contentView(): AnkoComponent<BaseActivity> = BaseView()
+
+//    private fun getContentView() = object : AnkoComponent<AppCompatActivity> {
+//        override fun createView(ui: AnkoContext<AppCompatActivity>) = with(ui) {
+//            verticalLayout {
+//                button {
+//                    text = ""
+//                    width = dip(20)
+//                    height = dip(30)
+//                    topPadding = dip(10)
+//                    top = dip(20)
+////                    onClick {  }
+////                    LinearLayout.LayoutParams
+////                    layout()
+//                }
+//
+//                textView {
+//                    text = ""
+//                    top = 10
+//                    bottom = 20
+//                }
+//            }
+//        }.view()
+//    }
 
     override fun accept(event: Params) {
             val f: Flowable<*> = dispatcher.dispatch(event)
-            val flow =  f.flatMap { entity ->
-                when (entity) {
-                    is InfoEntity<*> -> return@flatMap Flowable.create({ e: FlowableEmitter<Any> ->
-                        if (entity.code == 1 && entity.t != null)
-                            e.onNext(entity.t)
-                        else throw Exception(entity.msg)
-                    }, BackpressureStrategy.LATEST)
-                    else -> Flowable.just(entity)
-                }
-            }
-            respond(event,flow)
+//            val flow =  f.flatMap { entity ->
+//                when (entity) {
+//                    is InfoEntity<*> -> return@flatMap Flowable.create({e: FlowableEmitter<Any> ->
+//                        if (entity.code == 1 && entity.t != null)
+//                            e.onNext(entity.t)
+//                        else throw Exception(entity.msg)
+//                    }, BackpressureStrategy.LATEST)
+//                    else -> Flowable.just(entity)
+//                }
+//            }
+            respond(event,f)
     }
 
     abstract fun respond(event: Params, flowable:Flowable<*>)
@@ -51,7 +73,6 @@ abstract class BaseActivity : AppCompatActivity(), AnkoLogger, Consumer<Params> 
         super.onDestroy()
         compositeDisposable.dispose()
     }
-
 
 }
 

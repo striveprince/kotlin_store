@@ -1,10 +1,11 @@
-package com.tim.compiler
+package com.tim
 
-import com.tim.annotation.Event
-import com.tim.compiler.process.*
-import javax.annotation.processing.*
+import com.tim.process.*
+import javax.annotation.processing.ProcessingEnvironment
 import javax.lang.model.SourceVersion
 import javax.lang.model.element.TypeElement
+import javax.annotation.processing.AbstractProcessor
+import javax.annotation.processing.RoundEnvironment
 
 
 class AnnotationCompiler : AbstractProcessor() {
@@ -13,7 +14,7 @@ class AnnotationCompiler : AbstractProcessor() {
 //    var mElements: Elements //元素相关的辅助类
 //    var mMessage: Messager //日志相关的辅助类
 
-    override fun init(processingEnv: ProcessingEnvironment) {
+    @Synchronized override fun init(processingEnv: ProcessingEnvironment) {
         super.init(processingEnv)
         mFiler = processingEnv.filer
         mElements = processingEnv.elementUtils
@@ -30,7 +31,8 @@ class AnnotationCompiler : AbstractProcessor() {
         return SourceVersion.latest()
     }
 
-    override fun getSupportedAnnotationTypes(): MutableSet<String> {
-        return mutableSetOf(Event::class.java.canonicalName)
+    override fun getSupportedAnnotationTypes(): Set<String> {
+        return setOf(Event::class.java.canonicalName)
     }
+
 }

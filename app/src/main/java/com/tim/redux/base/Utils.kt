@@ -13,8 +13,9 @@ import io.reactivex.Flowable
 //public final <U, R> Flowable<R> zipWith(Publisher<? extends U> other, BiFunction<? super T, ? super U, ? extends R> zipper) {
 //inline fun Activity.relativeLayout(init: (@AnkoViewDslMarker _RelativeLayout).() -> Unit): android.widget.RelativeLayout {
 
+val gson = Gson()
 inline fun <reified T> Gson.fromJson(json: String) = this.fromJson<T>(json, object: TypeToken<T>(){}.type)
-
+inline fun <reified T> String.fromGson() = gson.fromJson<T>(this)
 inline fun <reified T> Flowable<*>.dispatchData() = this.filter { it is T }.map { it as T }
 
 fun <T : Flowable<T>> AppCompatActivity.lifecycle(flowable: Flowable<T>)= flowable.filter { LifecycleRegistry(this).currentState != Lifecycle.State.DESTROYED }

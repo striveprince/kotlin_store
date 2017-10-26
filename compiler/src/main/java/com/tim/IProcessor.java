@@ -1,4 +1,4 @@
-package com.tim.compiler;
+package com.tim;
 
 import javax.annotation.processing.AbstractProcessor;
 import javax.annotation.processing.RoundEnvironment;

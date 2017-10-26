@@ -1,4 +1,4 @@
-package com.kotlin.store
+package com.tim.store
 
 import kotlin.reflect.KFunction
 import kotlin.reflect.full.functions
