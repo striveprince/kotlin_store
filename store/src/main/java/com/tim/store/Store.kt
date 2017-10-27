@@ -13,7 +13,6 @@ interface Store {
         return  this::class.functions
                 .filter { kFunction -> event.function == kFunction.name }
                 .filter { kFunction -> checkParams(kFunction,event.params)}
-//                .filter {  }
                 .single()
                 .call(*list.toArray()) as T
     }

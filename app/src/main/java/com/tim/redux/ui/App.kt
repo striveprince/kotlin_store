@@ -10,6 +10,7 @@ import com.tim.redux.base.inject.component.DaggerAppComponent
 import com.tim.redux.base.inject.module.AppModule
 import com.tim.redux.data.api.ApiService
 import com.tim.redux.ui.store.HttpStore
+import com.tim.redux.ui.store.HttpStoreEvent
 import com.tim.store.Params
 //import HttpStoreEvent
 import io.reactivex.subjects.PublishSubject
@@ -26,7 +27,7 @@ class App : MultiDexApplication(), ActivityLifecycleCallbacks {
         application = this
         appComponent = DaggerAppComponent.builder().appModule(AppModule(this)).build()
         appComponent.inject(this)
-//        HttpStoreEvent.register(HttpStore.getInstance(service))
+        HttpStoreEvent.register(HttpStore.getInstance(service))
     }
     
     companion object {

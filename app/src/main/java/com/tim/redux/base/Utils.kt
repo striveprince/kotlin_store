@@ -5,6 +5,7 @@ import android.arch.lifecycle.LifecycleRegistry
 import android.support.v7.app.AppCompatActivity
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.tim.redux.data.entity.InfoEntity
 import io.reactivex.Flowable
 
 /**
@@ -16,6 +17,7 @@ import io.reactivex.Flowable
 val gson = Gson()
 inline fun <reified T> Gson.fromJson(json: String) = this.fromJson<T>(json, object: TypeToken<T>(){}.type)
 inline fun <reified T> String.fromGson() = gson.fromJson<T>(this)
+
 inline fun <reified T> Flowable<*>.dispatchData() = this.filter { it is T }.map { it as T }
 
 fun <T : Flowable<T>> AppCompatActivity.lifecycle(flowable: Flowable<T>)= flowable.filter { LifecycleRegistry(this).currentState != Lifecycle.State.DESTROYED }

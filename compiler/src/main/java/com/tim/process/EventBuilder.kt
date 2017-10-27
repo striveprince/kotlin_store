@@ -29,7 +29,7 @@ class EventBuilder(private val typeElement: TypeElement, private val methodEleme
                 .addType(TypeSpec.objectBuilder(classEventName)
                         .addFunction(registerFunction())
                         .addFunctions(eventFunction(methodElement))
-//                        .addProperties(addEventProperty(methodElement))
+                        .addProperties(addEventProperty(methodElement))
                         .addProperty(addGroupProperty())
                         .build())
                 .build()
@@ -45,13 +45,13 @@ class EventBuilder(private val typeElement: TypeElement, private val methodEleme
                 .build()
     }
 
-//    private fun addEventProperty(methodElement: List<EventMethod>): Iterable<PropertySpec> {
-//        return methodElement.map {
-//            PropertySpec.builder(it.methodName, String::class.asTypeName())
-//                    .initializer("\"${it.methodName}\"")
-//                    .build()
-//        }
-//    }
+    private fun addEventProperty(methodElement: List<EventMethod>): Iterable<PropertySpec> {
+        return methodElement.map {
+            PropertySpec.builder(it.methodName, String::class.asTypeName())
+                    .initializer("\"${it.methodName}\"")
+                    .build()
+        }
+    }
 
     private fun eventFunction(methodElement: List<EventMethod>): Iterable<FunSpec> {
         return methodElement.map { event ->
@@ -65,7 +65,7 @@ class EventBuilder(private val typeElement: TypeElement, private val methodEleme
 
     private fun paramCode(event: EventMethod): CodeBlock {
         val builder = StringBuilder("return %T(group,")
-        builder.append("\"${event.methodName}\"")
+        builder.append(event.methodName)
         builder.append(",group,")
         event.parameters.forEach{
             builder.append(it.simpleName)

@@ -11,8 +11,6 @@ import io.reactivex.Flowable
 /**
  * Created by pc on 2017/10/20.
  */
-
-
 class HttpStore private constructor(private val apiService: ApiService): Store {
     class Builder(apiService: ApiService){
         val store = HttpStore(apiService)
