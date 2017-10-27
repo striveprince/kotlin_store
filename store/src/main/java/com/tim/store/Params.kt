@@ -6,7 +6,7 @@ package com.tim.store
 class Params(
         val group:String,
         val function:String,
-        val state: Int = 0,
         val tag:String,
+        val state: Int = 0,
         vararg p:Any
 ){ val params = p }

@@ -7,5 +7,7 @@ import javax.lang.model.element.ExecutableElement
  */
 class EventMethod (element: ExecutableElement){
     val methodName = element.simpleName()
+    val parameters = element.parameters
+//    val parameters = element.parameters
 
 }

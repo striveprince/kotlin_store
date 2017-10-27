@@ -33,6 +33,7 @@ class HttpStore private constructor(private val apiService: ApiService): Store {
         }
     }
 
+    @Event
     fun getHomeData(state:Int): Flowable<InfoEntity<HomeDataEntity>> {
         return apiService.getHomeData("")
     }
