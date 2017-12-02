@@ -1,4 +1,4 @@
-include ':app', ':store'
+include ':app', ':store', ':redux'
 //include ':store'
 include ':annotation'
 include ':compiler'

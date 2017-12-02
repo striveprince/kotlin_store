@@ -3,8 +3,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 android {
-    compileSdkVersion 26
-    buildToolsVersion '26.0.2'
+    compileSdkVersion compile_sdk_version
+    buildToolsVersion build_tools_version
     defaultConfig {
         applicationId "com.tim.redux"
         minSdkVersion min_sdk_version

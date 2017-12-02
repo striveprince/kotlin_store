@@ -21,14 +21,14 @@ class FragmentModule(val fragment:Fragment){
     @FragmentScope
     @Provides
     @FragmentContext
-    internal fun provideContext(): Context {
+    internal fun provideContext(): Context? {
         return fragment.activity
     }
 
     @FragmentScope
     @Provides
     @SupportFragmentManager
-    internal fun provideManager(): FragmentManager {
+    internal fun provideManager(): FragmentManager? {
         return fragment.fragmentManager
     }
 

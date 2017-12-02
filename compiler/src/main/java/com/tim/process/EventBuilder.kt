@@ -24,7 +24,7 @@ class EventBuilder(private val typeElement: TypeElement, private val methodEleme
 
 
     fun brewKotlin() {
-        mMessage.printMessage(Diagnostic.Kind.WARNING, "process_start")
+//        mMessage.printMessage(Diagnostic.Kind.WARNING, "process_start")
         val fileSpec = FileSpec.builder(packageName, classEventName)
                 .addType(TypeSpec.objectBuilder(classEventName)
                         .addFunction(registerFunction())
@@ -36,7 +36,7 @@ class EventBuilder(private val typeElement: TypeElement, private val methodEleme
         mFiler.createResource(StandardLocation.SOURCE_OUTPUT, packageName, classEventName + ".kt")
                 .openWriter()
                 .use { fileSpec.writeTo(it) }
-        mMessage.printMessage(Diagnostic.Kind.WARNING, "process_end")
+//        mMessage.printMessage(Diagnostic.Kind.WARNING, "process_end")
     }
 
     private fun addGroupProperty(): PropertySpec {
